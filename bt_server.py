@@ -41,7 +41,8 @@ def compute_bradley_terry(data):
         winner = row[2].strip()
         if team1: teams.add(team1)
         if team2: teams.add(team2)
-        if winner: teams.add(winner)
+        if winner and winner != "引き分け": 
+            teams.add(winner)
     teams = list(teams)
     teams.sort()  # 内部処理用にアルファベット順（または日本語順）にソート
     team_index = {team: i for i, team in enumerate(teams)}
@@ -70,6 +71,9 @@ def compute_bradley_terry(data):
             wins[i][j] += 1
         elif winner == team2:
             wins[j][i] += 1
+        elif winner == "引き分け":
+            wins[i][j] += 0.5
+            wins[j][i] += 0.5
         else:
             # 勝者がどちらとも一致しない場合はスキップ
             continue
